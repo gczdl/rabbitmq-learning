@@ -14,6 +14,7 @@ public class Provider {
     public static void main(String[] args) throws IOException {
         Connection connection= RabbitMqUtils.getConnection();
         Channel channel=connection.createChannel();
+
         channel.queueDeclare("work",true,false,false,null);
         for (int i=0;i<20;i++){
             channel.basicPublish("","work",null,(i+"hollo work quene").getBytes());

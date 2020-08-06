@@ -15,6 +15,7 @@ public class Consumer1 {
         Channel channel=connection.createChannel();
         channel.basicQos(1);
         channel.queueDeclare("work",true,false,false,null);
+        //参数2：是否自动确认，不自动确认的话就处理完再确认然后才能再消费
         channel.basicConsume("work",false,new DefaultConsumer(channel){
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
