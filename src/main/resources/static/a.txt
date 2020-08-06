@@ -1,0 +1,22 @@
+SELECT
+	*
+FROM
+	user_user u
+	INNER JOIN org_personnel p ON u.personnel_id = p.id
+	LEFT JOIN org_organizational o ON p.organizational_id = o.id
+	LEFT JOIN org_position op ON op.id = p.position_id
+WHERE
+	u.user_category IN ( 0, 2 )
+	AND (
+	@P - 1 { p.job_number = '@jobNumber@' })
+	AND (
+	@P - 2 { u.user_name = '@userName@' })
+	AND (
+	@P - 3 { p.person_name = '@personName@' })
+	AND (
+	@P - 4 { u.is_frozen = '@isFrozen@' })
+	AND (
+	@P - 5 { date_format( u.create_date, '%Y-%m-%d' )>= '@createDateStart@' })
+	AND (
+	@P - 5-1 { date_format( u.create_date, '%Y-%m-%d' ) <= '@createDateEnd@' })
+	AND u.is_delete =0
